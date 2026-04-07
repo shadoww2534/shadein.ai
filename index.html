@@ -2,28 +2,128 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shadein AI</title>
     <style>
-        body {
-            background-color: #000;
-            color: #fff;
-            font-family: 'Courier New', Courier, monospace;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
-            overflow: hidden;
+        body { 
+            background-color: #000; 
+            color: #fff; 
+            font-family: 'Courier New', Courier, monospace; 
+            margin: 0; 
+            display: flex; 
+            flex-direction: column; 
+            height: 100vh; 
         }
-        h1 {
-            font-size: 80px;
-            letter-spacing: 10px;
-            text-shadow: 0 0 15px #fff;
-            margin: 0;
+        header { 
+            padding: 25px; 
+            text-align: center; 
+            border-bottom: 1px solid #333; 
+        }
+        h1 { 
+            margin: 0; 
+            font-size: 30px; 
+            letter-spacing: 8px; 
+            text-shadow: 0 0 10px #fff; 
+        }
+        #chat-box { 
+            flex: 1; 
+            padding: 20px; 
+            overflow-y: auto; 
+            display: flex; 
+            flex-direction: column; 
+            gap: 15px; 
+        }
+        .msg { 
+            padding: 12px 18px; 
+            border-radius: 4px; 
+            max-width: 85%; 
+            line-height: 1.5; 
+            font-size: 15px; 
+            border: 1px solid #333;
+        }
+        .ai { 
+            align-self: flex-start; 
+            background: #111; 
+            color: #fff; 
+        }
+        .user { 
+            align-self: flex-end; 
+            background: #fff; 
+            color: #000; 
+            font-weight: bold; 
+        }
+        .input-area { 
+            padding: 20px; 
+            background: #000; 
+            display: flex; 
+            gap: 10px; 
+            border-top: 1px solid #333; 
+        }
+        input { 
+            flex: 1; 
+            padding: 12px; 
+            border: 1px solid #333; 
+            background: #000; 
+            color: #fff; 
+            outline: none; 
+            font-family: monospace;
+        }
+        button { 
+            background: #fff; 
+            color: #000; 
+            border: none; 
+            padding: 0 25px; 
+            font-weight: bold; 
+            cursor: pointer; 
+            text-transform: uppercase;
+        }
+        button:hover { 
+            background: #ccc; 
         }
     </style>
 </head>
 <body>
-    <h1>SHADEIN AI</h1>
+    <header><h1>SHADEIN AI</h1></header>
+    <div id="chat-box">
+        <div class="msg ai">> SİSTEM ÇALIŞIYOR...<br>> KOMUT BEKLENİYOR...</div>
+    </div>
+    <div class="input-area">
+        <input type="text" id="userInput" placeholder="Komut girin..." onkeypress="if(event.key === 'Enter') send()">
+        <button onclick="send()">GİRİŞ</button>
+    </div>
+
+    <script>
+        function send() {
+            let input = document.getElementById("userInput");
+            let box = document.getElementById("chat-box");
+            if (input.value.trim() === "") return;
+
+            let userMsg = document.createElement("div");
+            userMsg.className = "msg user";
+            userMsg.innerText = input.value;
+            box.appendChild(userMsg);
+
+            let aiMsg = document.createElement("div");
+            aiMsg.className = "msg ai";
+            aiMsg.innerText = "> VERİ ANALİZ EDİLİYOR...";
+            box.appendChild(aiMsg);
+
+            setTimeout(() => {
+                let replies = [
+                    "> ERİŞİM REDDEDİLDİ.",
+                    "> ANALİZ TAMAMLANAMADI.",
+                    "> GÖLGE SİSTEMİ ÇEVRİMDIŞI.",
+                    "> GEÇERSİZ KOMUT.",
+                    "> SHADEIN AI: NE DİON AQ?"
+                ];
+                aiMsg.innerText = replies[Math.floor(Math.random() * replies.length)];
+                box.scrollTop = box.scrollHeight;
+            }, 800);
+
+            input.value = "";
+            box.scrollTop = box.scrollHeight;
+        }
+    </script>
 </body>
-</html>
+        </html>
+        
